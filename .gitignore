@@ -1,0 +1,7 @@
+# Built shaderpack archive (regenerate from shaders/ — see README).
+Plixar-Shaders.zip
+*.zip
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db

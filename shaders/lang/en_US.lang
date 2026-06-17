@@ -1,0 +1,51 @@
+# Plixar Shaders - English GUI labels
+
+# Screens
+screen.LIGHTING=Lighting & Shadows
+screen.WATER=Water
+screen.ATMOSPHERE=Atmosphere
+screen.POST=Post-Processing
+screen.SHADOWS=Shadow Tuning
+
+# Profiles
+profile.ULTRA_LOW=Ultra-Low (max FPS)
+profile.LOW_END=Low-End (integrated GPU)
+profile.FAST=Fast (iGPU + shadows, ~100 FPS)
+profile.POTATO=Potato (fastest dedicated)
+profile.BALANCED=Balanced
+profile.ULTRA=Ultra (prettiest)
+
+# Toggles
+option.SHADOWS_ENABLED=Shadows
+option.AO_ENABLED=Ambient Occlusion
+option.WATER_WAVES=Water Waves
+option.WATER_REFLECTIONS=Water Reflections
+option.WATER_REFRACTION=Water Refraction
+option.FOG_ENABLED=Atmospheric Fog
+option.GODRAYS_ENABLED=Volumetric Light (God Rays)
+option.BLOOM_ENABLED=Bloom
+option.TONEMAP_ENABLED=Filmic Tonemapping
+option.VIGNETTE=Vignette
+
+# Sliders
+option.SHADOW_RES=Shadow Resolution
+option.PCF_SAMPLES=Shadow Smoothing (PCF taps)
+option.SHADOW_SOFTNESS=Shadow Softness
+option.SHADOW_BIAS=Shadow Bias
+option.SUN_INTENSITY=Sunlight Intensity
+option.AMBIENT_STRENGTH=Ambient Strength
+option.WATER_OPACITY=Water Opacity
+option.FOG_DENSITY=Fog Density
+option.GODRAYS_SAMPLES=God Ray Quality
+option.SKY_INTENSITY=Sky Brightness
+option.BLOOM_STRENGTH=Bloom Strength
+option.EXPOSURE=Exposure
+option.SATURATION=Saturation
+
+# Tooltips
+option.SUN_INTENSITY.comment=How strong direct sunlight is. Higher = brighter, punchier scenes.
+option.GODRAYS_SAMPLES.comment=Number of steps for light shafts. Higher looks smoother but costs more FPS.
+option.SHADOW_SOFTNESS.comment=Blur radius of shadow edges. 0 = hard shadows.
+option.SHADOW_RES.comment=Shadow map size. Biggest FPS lever for shadows: 1024 is fast, 2048+ is sharper but costs more.
+option.PCF_SAMPLES.comment=How many taps smooth the shadow edges. Lower = faster. 1 = hard shadows.
+option.WATER_OPACITY.comment=How opaque water is when looking straight down.
