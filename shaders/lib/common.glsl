@@ -73,7 +73,7 @@
 #endif
 
 const int   shadowMapResolution = SHADOW_RES;
-const float shadowDistance      = 96.0;     // shorter = less to render = faster
+const float shadowDistance      = 64.0;     // shorter = less to render = faster
 const bool  shadowHardwareFiltering = false;
 const float sunPathRotation     = -25.0;    // tilts the sun path for nicer angles
 

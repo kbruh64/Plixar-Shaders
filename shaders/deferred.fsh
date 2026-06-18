@@ -117,5 +117,29 @@ void main() {
     float rim = pow(1.0 - saturate(dot(worldN, V)), 4.0);
     color += ambientColor() * rim * 0.06 * lm.y;
 
+    // --- Fog folded into the lighting pass. Doing it here means the composite
+    //     stage can be skipped entirely when god rays are off (one fewer
+    //     full-screen HDR pass -- a real fill-rate win on integrated GPUs).
+#ifdef FOG_ENABLED
+    vec3 worldDir = normalize(mat3(gbufferModelViewInverse) * normalize(viewPos));
+
+    float fogStart = far * 0.55;
+    float fogEnd   = far * 0.95;
+    float dFog = saturate((dist - fogStart) / max(fogEnd - fogStart, EPS));
+    dFog = 1.0 - exp(-dFog * dFog * 3.0 * FOG_DENSITY);
+
+    float worldY = worldPos.y + cameraPosition.y;
+    float heightFog = saturate(exp(-(worldY - 48.0) * 0.06));
+    heightFog *= saturate(dist / (far * 0.25)) * 0.5 * FOG_DENSITY;
+
+    float fog = saturate(dFog + heightFog);
+
+    vec3 fColor = skyGradient(worldDir);
+    float toSun = saturate(dot(worldDir, getSunDir()));
+    fColor = mix(fColor, sunlightColor(), pow(toSun, 4.0) * 0.4 * timeBlend());
+
+    color = mix(color, fColor, fog);
+#endif
+
     gl_FragData[0] = vec4(color, 1.0);
 }

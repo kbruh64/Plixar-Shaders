@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plixar Shaders — download</title>
+<meta name="description" content="A realistic shaderpack for Minecraft: Java Edition (OptiFine / Iris). Soft shadows, procedural sky, reflective water. Profiles from integrated-GPU to high-end.">
+<link rel="icon" href="pack.png">
+<style>
+  :root {
+    --bg:        #0d1018;
+    --panel:     #161b27;
+    --panel-2:   #1d2433;
+    --line:      #2a3346;
+    --ink:       #e7ecf5;
+    --ink-dim:   #9aa6bd;
+    --accent:    #ffb066;   /* the sunset orange from the thumbnail */
+    --accent-2:  #7fb6e6;   /* the water blue */
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.6 ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent-2); }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---- header ---- */
+  header {
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, #11151f 0%, var(--bg) 100%);
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 0;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: .2px; }
+  .brand img { width: 34px; height: 34px; border-radius: 7px; image-rendering: pixelated;
+               border: 1px solid var(--line); }
+  .nav a.small { color: var(--ink-dim); text-decoration: none; font-size: 14px; margin-left: 18px; }
+  .nav a.small:hover { color: var(--ink); }
+
+  /* ---- hero ---- */
+  .hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center;
+          padding: 56px 0 48px; }
+  .hero h1 { font-size: 40px; line-height: 1.1; margin: 0 0 14px; letter-spacing: -.5px; }
+  .hero h1 .dot { color: var(--accent); }
+  .hero p.lead { color: var(--ink-dim); font-size: 18px; margin: 0 0 26px; max-width: 46ch; }
+  .shot {
+    width: 100%; border-radius: 12px; border: 1px solid var(--line);
+    image-rendering: pixelated; display: block;
+    box-shadow: 0 18px 50px -20px rgba(0,0,0,.7);
+  }
+
+  .cta { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: var(--accent); color: #2a1605; font-weight: 700;
+    text-decoration: none; padding: 13px 22px; border-radius: 9px; font-size: 16px;
+    border: 1px solid #ffc488; transition: transform .06s ease, filter .15s ease;
+  }
+  .btn:hover { filter: brightness(1.06); }
+  .btn:active { transform: translateY(1px); }
+  .btn .sz { font-weight: 500; opacity: .7; font-size: 13px; }
+  .btn-ghost {
+    text-decoration: none; color: var(--ink); font-size: 15px;
+    padding: 12px 18px; border: 1px solid var(--line); border-radius: 9px;
+  }
+  .btn-ghost:hover { border-color: var(--ink-dim); }
+
+  /* ---- sections ---- */
+  section { padding: 40px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 24px; margin: 0 0 6px; letter-spacing: -.3px; }
+  .sub { color: var(--ink-dim); margin: 0 0 26px; }
+
+  .feat { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 11px; padding: 18px 20px; }
+  .card h3 { margin: 0 0 6px; font-size: 16px; }
+  .card p { margin: 0; color: var(--ink-dim); font-size: 14.5px; }
+
+  /* ---- profiles table ---- */
+  .tbl { width: 100%; border-collapse: collapse; font-size: 14.5px; overflow: hidden;
+         border: 1px solid var(--line); border-radius: 11px; }
+  .tbl th, .tbl td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .tbl thead th { background: var(--panel-2); color: var(--ink); font-weight: 600; }
+  .tbl tr:last-child td { border-bottom: 0; }
+  .tbl td:first-child { font-weight: 600; }
+  .tbl tr td .tag { font-size: 12px; color: var(--accent); }
+
+  /* ---- install ---- */
+  ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 0; }
+  ol.steps li { position: relative; padding: 12px 0 12px 44px; border-bottom: 1px solid var(--line); }
+  ol.steps li:last-child { border-bottom: 0; }
+  ol.steps li::before {
+    counter-increment: s; content: counter(s);
+    position: absolute; left: 0; top: 11px;
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--panel-2); border: 1px solid var(--line);
+    display: grid; place-items: center; font-size: 13px; font-weight: 700; color: var(--accent);
+  }
+  code { background: var(--panel-2); border: 1px solid var(--line); border-radius: 5px;
+         padding: 1px 6px; font-size: 13.5px; }
+
+  .note { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--accent);
+          border-radius: 9px; padding: 14px 18px; color: var(--ink-dim); font-size: 14.5px; }
+  .note b { color: var(--ink); }
+
+  footer { border-top: 1px solid var(--line); padding: 28px 0 48px; color: var(--ink-dim); font-size: 13.5px; }
+  footer a { color: var(--ink-dim); }
+
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; gap: 28px; padding: 36px 0; }
+    .hero h1 { font-size: 32px; }
+    .feat { grid-template-columns: 1fr; }
+    .nav a.small:first-of-type { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="brand"><img src="pack.png" alt="Plixar Shaders icon"> Plixar Shaders</div>
+    <nav>
+      <a class="small" href="#features">Features</a>
+      <a class="small" href="#profiles">Profiles</a>
+      <a class="small" href="#install">Install</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <h1>A realistic shaderpack for<br>Minecraft<span class="dot">.</span> Java Edition</h1>
+      <p class="lead">Soft shadows, an atmospheric procedural sky, and reflective water — with
+        a profile ladder from integrated graphics all the way to high-end. Runs on OptiFine or Iris.</p>
+      <div class="cta">
+        <a class="btn" href="Plixar-Shaders.zip" download>
+          Download <span class="sz">.zip · ~40 KB</span>
+        </a>
+        <a class="btn-ghost" href="#install">How to install</a>
+      </div>
+    </div>
+    <div>
+      <img class="shot" src="pack.png" alt="Plixar Shaders preview: a sunset over water">
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <h2>What's in it</h2>
+    <p class="sub">No marketing — here's what the GLSL actually does.</p>
+    <div class="feat">
+      <div class="card">
+        <h3>Procedural sky</h3>
+        <p>Analytic atmospheric gradient with a real sun &amp; moon disc, sunset reddening,
+           twinkling stars, and time-of-day color that the fog and water pick up.</p>
+      </div>
+      <div class="card">
+        <h3>Soft shadows</h3>
+        <p>Distorted shadow map with contact-hardening PCF — crisp up close, softer with
+           distance. Translucent blockers (water, stained glass) tint the sunlight instead
+           of fully blocking it.</p>
+      </div>
+      <div class="card">
+        <h3>Reflective water</h3>
+        <p>Depth-based clarity (shallow reads clear, deep reads dark), layered moving waves,
+           a fresnel sky reflection, and a bright sun sparkle.</p>
+      </div>
+      <div class="card">
+        <h3>Soft, sky-lit shading</h3>
+        <p>Half-Lambert diffuse and luminous sky-colored ambient, so shadows read airy rather
+           than black. Foliage glows when backlit; grass and leaves sway in the wind.</p>
+      </div>
+      <div class="card">
+        <h3>Atmosphere &amp; post</h3>
+        <p>Distance + height fog, optional volumetric god rays and bloom, ACES tone mapping,
+           and a gentle filmic grade. Underwater and lava tints included.</p>
+      </div>
+      <div class="card">
+        <h3>Built to be tuned</h3>
+        <p>An in-game settings screen with six performance profiles plus sliders for shadows,
+           sun, fog, bloom, exposure and more — change anything without editing files.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFILES -->
+  <section id="profiles">
+    <h2>Performance profiles</h2>
+    <p class="sub">Pick one in the shader options screen. They go from "runs on anything" to "needs a real GPU."</p>
+    <table class="tbl">
+      <thead>
+        <tr><th>Profile</th><th>What it turns on</th><th>For</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Ultra-Low</td><td>Lit world + sky only. No shadows, fog or post.</td><td>Weakest hardware / max FPS</td></tr>
+        <tr><td>Low-End</td><td>Adds fog and hard 512 shadows.</td><td>Integrated graphics</td></tr>
+        <tr><td>Fast <span class="tag">default</span></td><td>Soft shadows, fog, AO, tone mapping.</td><td>Laptops / iGPUs that want shadows</td></tr>
+        <tr><td>Potato</td><td>Like Fast but hard shadows.</td><td>Weaker dedicated GPUs</td></tr>
+        <tr><td>Balanced</td><td>Adds god rays, bloom, water reflections.</td><td>Mid-range GPUs</td></tr>
+        <tr><td>Ultra</td><td>Everything cranked: 2048 shadows, 12-tap PCF, refraction.</td><td>High-end GPUs</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- INSTALL -->
+  <section id="install">
+    <h2>Install</h2>
+    <p class="sub">Two minutes. You need OptiFine or Iris first.</p>
+    <ol class="steps">
+      <li>Install <a href="https://irisshaders.dev/" target="_blank" rel="noopener">Iris</a>
+          (recommended) or <a href="https://optifine.net/" target="_blank" rel="noopener">OptiFine</a>
+          for your Minecraft version.</li>
+      <li>Launch the game and open the <b>Shader Packs</b> screen (Iris) or
+          <b>Options → Video Settings → Shaders</b> (OptiFine).</li>
+      <li>Click <b>Open Shader Pack Folder</b>.</li>
+      <li>Drop the downloaded <code>Plixar-Shaders.zip</code> into that folder.</li>
+      <li>Select <b>Plixar Shaders</b> in the list and apply. Adjust the profile in the
+          options if you want more FPS or more eye-candy.</li>
+    </ol>
+    <p style="margin-top:22px" class="note">
+      <b>Not getting more than ~60 FPS?</b> That's almost always a frame cap, not the pack —
+      turn off <b>VSync</b> in Video Settings, and check that AMD/NVIDIA software isn't capping
+      the framerate (e.g. Radeon Chill / Frame Rate Target). Lowering render distance helps most
+      on integrated graphics.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    Plixar Shaders · works with OptiFine &amp; Iris on Minecraft: Java Edition.<br>
+    Not affiliated with Mojang or Microsoft. "Minecraft" is a trademark of Mojang Synergies AB.
+  </div>
+</footer>
+
+</body>
+</html>

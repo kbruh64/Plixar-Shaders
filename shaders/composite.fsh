@@ -19,9 +19,11 @@ varying vec2 texcoord;
 void main() {
     vec3 color = texture2D(colortex0, texcoord).rgb;
 
-    // If fog, god rays and water/lava tint are all off, this whole pass is a
-    // straight copy -- bail before the expensive position reconstruction.
-#if !defined FOG_ENABLED && !defined GODRAYS_ENABLED
+    // Fog now lives in the deferred pass. This stage only does god rays and the
+    // underwater/lava tint, so when god rays are off and the eye is in air it's
+    // a straight copy -- bail before any expensive work. On the Fast/Low-End
+    // profiles this whole pass is essentially free.
+#ifndef GODRAYS_ENABLED
     if (isEyeInWater == 0) {
         gl_FragData[0] = vec4(color, 1.0);
         return;
@@ -32,37 +34,6 @@ void main() {
 
     vec3 viewPos  = screenToView(texcoord, depth);
     float dist    = length(viewPos);
-    vec3 worldDir = normalize(mat3(gbufferModelViewInverse) * normalize(viewPos));
-
-    // --------------------------------------------------------------------
-    //  Fog
-    // --------------------------------------------------------------------
-#ifdef FOG_ENABLED
-    if (depth < 1.0) {
-        // Distance fog (exponential-squared).
-        float fogStart = far * 0.55;
-        float fogEnd   = far * 0.95;
-        float dFog = saturate((dist - fogStart) / max(fogEnd - fogStart, EPS));
-        dFog = 1.0 - exp(-dFog * dFog * 3.0 * FOG_DENSITY);
-
-        // Height fog (thicker low to the ground / over water).
-        vec3 worldPos = viewToWorld(viewPos) + cameraPosition;
-        float h = worldPos.y;
-        float heightFog = saturate(exp(-(h - 48.0) * 0.06));
-        heightFog *= saturate(dist / (far * 0.25));
-        heightFog *= 0.5 * FOG_DENSITY;
-
-        float fog = saturate(dFog + heightFog);
-
-        // Fog color: cheap sky gradient, tinted toward the sun for a warm
-        // horizon. (skyGradient skips discs/stars -- invisible behind fog.)
-        vec3 fColor = skyGradient(worldDir);
-        float toSun = saturate(dot(worldDir, getSunDir()));
-        fColor = mix(fColor, sunlightColor(), pow(toSun, 4.0) * 0.4 * timeBlend());
-
-        color = mix(color, fColor, fog);
-    }
-#endif
 
     // --------------------------------------------------------------------
     //  Volumetric god rays (screen-space march toward the sun)
