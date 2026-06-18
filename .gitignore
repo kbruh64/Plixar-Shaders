@@ -2,6 +2,9 @@
 Plixar-Shaders.zip
 *.zip
 
+# ...except the copy the website serves for download — that one must ship.
+!site/Plixar-Shaders.zip
+
 # OS / editor cruft
 .DS_Store
 Thumbs.db

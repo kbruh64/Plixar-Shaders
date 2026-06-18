@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "site",
+  "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/Plixar-Shaders.zip",
+      "headers": [
+        { "key": "Content-Type", "value": "application/zip" },
+        { "key": "Content-Disposition", "value": "attachment; filename=\"Plixar-Shaders.zip\"" }
+      ]
+    }
+  ]
+}
