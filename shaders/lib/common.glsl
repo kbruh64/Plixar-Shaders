@@ -33,10 +33,10 @@
     #define SHADOW_BIAS 0.0008       // [0.0002 0.0004 0.0008 0.0012 0.0020]
 #endif
 #ifndef SUN_INTENSITY
-    #define SUN_INTENSITY 2.2        // [1.0 1.5 2.0 2.2 2.6 3.0 4.0]
+    #define SUN_INTENSITY 2.7        // [1.0 1.5 2.0 2.2 2.7 3.2 3.6 4.0]
 #endif
 #ifndef AMBIENT_STRENGTH
-    #define AMBIENT_STRENGTH 0.55    // [0.10 0.20 0.30 0.35 0.45 0.55 0.70 0.85]
+    #define AMBIENT_STRENGTH 0.7     // [0.10 0.20 0.30 0.35 0.45 0.55 0.7 0.85 1.0]
 #endif
 #ifndef WATER_OPACITY
     #define WATER_OPACITY 0.72       // [0.40 0.55 0.72 0.85 0.95]
@@ -54,10 +54,10 @@
     #define BLOOM_STRENGTH 0.45      // [0.10 0.25 0.45 0.60 0.80 1.00]
 #endif
 #ifndef EXPOSURE
-    #define EXPOSURE 1.12            // [0.6 0.8 1.0 1.12 1.25 1.4 1.6]
+    #define EXPOSURE 1.0             // [0.6 0.8 1.0 1.12 1.25 1.4 1.6]
 #endif
 #ifndef SATURATION
-    #define SATURATION 1.0           // [0.8 0.9 1.0 1.08 1.2 1.4] soft/Derivative look
+    #define SATURATION 1.05          // [0.8 0.9 1.0 1.05 1.15 1.25 1.4]
 #endif
 
 // ---------------------------------------------------------------------------

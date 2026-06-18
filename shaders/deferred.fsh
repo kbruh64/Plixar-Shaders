@@ -59,14 +59,13 @@ void main() {
     float rawNdotL = dot(worldN, L);
     float NdotL = saturate(rawNdotL);
 
-    // Half-Lambert wrap: surfaces ease into shadow instead of a hard terminator.
-    // Much softer, more natural falloff -- and free.
-    float wrap = saturate(rawNdotL * 0.6 + 0.4);
-    wrap *= wrap;
+    // Gentle wrap so the terminator isn't a hard line, but keep most of the
+    // Lambert shape (a softer wrap than before -- the old one flattened it).
+    float wrap = saturate(rawNdotL * 0.85 + 0.15);
 
     vec3 shadow = getShadow(worldPos, NdotL, dist);
     vec3 sunCol = mix(moonlightColor(), sunlightColor(), timeBlend());
-    float lightStr = mix(0.25, SUN_INTENSITY, timeBlend());
+    float lightStr = mix(0.3, SUN_INTENSITY, timeBlend());
 
     vec3 direct = sunCol * wrap * shadow * lightStr;
 
@@ -108,10 +107,6 @@ void main() {
     // --- Combine ---
     vec3 lighting = direct + ambient + blockLight;
     vec3 color = albedo * lighting;
-
-    // Cheap color bleed: the ambient bounce picks up a touch of the surface's
-    // own color, so grass reads greener, sand warmer, etc. (one extra mul).
-    color += albedo * albedo * ambient * 0.25;
 
     // Subtle rim from the sky for nicer silhouettes.
     float rim = pow(1.0 - saturate(dot(worldN, V)), 4.0);

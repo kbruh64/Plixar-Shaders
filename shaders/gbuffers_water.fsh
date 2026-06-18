@@ -96,14 +96,16 @@ void main() {
         float glint   = pow(NdotH, 120.0) * 3.0;           // soft halo
         vec3 sunSpec = sunlightColor() * (sparkle + glint) * timeBlend();
 
-        // --- Water body color: teal shallow -> deep navy absorption gradient.
-        vec3 shallow = vec3(0.16, 0.46, 0.52);
-        vec3 mid     = vec3(0.05, 0.24, 0.36);
-        vec3 deep    = vec3(0.01, 0.06, 0.13);
+        // --- Water body color: bright teal shallow -> deep blue absorption.
+        //     Brighter than physically-deep water so it reads vivid (matching
+        //     the popular packs) rather than muddy after tone mapping.
+        vec3 shallow = vec3(0.22, 0.62, 0.70);
+        vec3 mid     = vec3(0.08, 0.36, 0.52);
+        vec3 deep    = vec3(0.02, 0.14, 0.30);
         vec3 waterCol = mix(shallow, mid, smoothstep(0.0, 0.45, depthFade));
         waterCol = mix(waterCol, deep, smoothstep(0.4, 1.0, depthFade));
         // Sky access brightens open water a touch.
-        waterCol *= mix(0.7, 1.15, lmcoord.y);
+        waterCol *= mix(0.8, 1.25, lmcoord.y);
 
         // --- Compose: tint -> sky reflection by fresnel, add the sparkle.
         vec3 col = mix(waterCol, skyRefl, fres) + sunSpec;
